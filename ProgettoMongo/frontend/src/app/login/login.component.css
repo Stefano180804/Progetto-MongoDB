@@ -1,0 +1,128 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--bg-color);
+}
+
+.login-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 2rem;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.brand h1 {
+    font-size: 1.25rem;
+    color: var(--text-main);
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.error-message {
+    color: #ef4444;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    background-color: #fef2f2;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

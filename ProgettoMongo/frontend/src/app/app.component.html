@@ -1,0 +1,150 @@
+<div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="logo-icon">ITS</div>
+            <h1>Gestione Corsi</h1>
+        </div>
+
+        <nav class="nav-menu">
+            <button (click)="setView('dashboard')" [class.active]="currentView === 'dashboard'" class="nav-item">
+                <span class="icon">📊</span> Dashboard
+            </button>
+            <button (click)="setView('moduli')" [class.active]="currentView === 'moduli'" class="nav-item">
+                <span class="icon">📚</span> Moduli
+            </button>
+            <button (click)="setView('studenti')" [class.active]="currentView === 'studenti'" class="nav-item">
+                <span class="icon">🎓</span> Studenti
+            </button>
+        </nav>
+
+        <div class="user-profile">
+            <div class="avatar">A</div>
+            <div class="user-info">
+                <span class="name">Admin User</span>
+                <span class="role">Amministratore</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Dashboard View -->
+        <div *ngIf="currentView === 'dashboard'" class="view-container fade-in">
+            <header class="view-header">
+                <h2>Panoramica</h2>
+                <p class="subtitle">Benvenuto nel pannello di gestione ITS.</p>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon purple">📚</div>
+                    <div class="stat-info">
+                        <span class="label">Moduli Attivi</span>
+                        <span class="value">{{ moduli.length }}</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon pink">🎓</div>
+                    <div class="stat-info">
+                        <span class="label">Studenti Iscritti</span>
+                        <span class="value">{{ studenti.length }}</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">📝</div>
+                    <div class="stat-info">
+                        <span class="label">Esami Registrati</span>
+                        <span class="value">{{ esami.length }}</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">⭐</div>
+                    <div class="stat-info">
+                        <span class="label">Media Voti</span>
+                        <span class="value">{{ mediaVoti }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container">
+                <h3>Attività Recente</h3>
+                <div class="table-card">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Studente</th>
+                                <th>Modulo</th>
+                                <th>Voto</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let esame of esami">
+                                <td>{{ esame.studente }}</td>
+                                <td>{{ esame.modulo }}</td>
+                                <td>
+                                    <span class="badge" [class.success]="esame.voto >= 24"
+                                        [class.warning]="esame.voto < 24">
+                                        {{ esame.voto }}
+                                    </span>
+                                </td>
+                                <td>{{ esame.data }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moduli View -->
+        <div *ngIf="currentView === 'moduli'" class="view-container fade-in">
+            <header class="view-header">
+                <h2>Moduli Formativi</h2>
+                <button class="btn-primary">+ Nuovo Modulo</button>
+            </header>
+
+            <div class="grid-list">
+                <div *ngFor="let modulo of moduli" class="item-card">
+                    <div class="card-header">
+                        <span class="code">{{ modulo.codice }}</span>
+                        <span class="hours">{{ modulo.ore }} ore</span>
+                    </div>
+                    <h3>{{ modulo.nome }}</h3>
+                    <p>{{ modulo.descrizione }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Studenti View -->
+        <div *ngIf="currentView === 'studenti'" class="view-container fade-in">
+            <header class="view-header">
+                <h2>Studenti</h2>
+                <button class="btn-primary">+ Nuovo Studente</button>
+            </header>
+
+            <div class="table-card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>Email</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let studente of studenti">
+                            <td>{{ studente.nome }}</td>
+                            <td>{{ studente.cognome }}</td>
+                            <td>{{ studente.email }}</td>
+                            <td><button class="btn-text">Dettagli</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</div>
