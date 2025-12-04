@@ -1,0 +1,14 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark blue background with rounded corners -->
+  <rect width="512" height="512" rx="80" fill="#1e3a8a"/>
+  
+  <!-- White "ITS" text -->
+  <text 
+    x="256" 
+    y="320" 
+    font-family="Arial, sans-serif" 
+    font-size="180" 
+    font-weight="700" 
+    fill="white" 
+    text-anchor="middle">ITS</text>
+</svg>

@@ -102,7 +102,7 @@
         <div *ngIf="currentView === 'moduli'" class="view-container fade-in">
             <header class="view-header">
                 <h2>Moduli Formativi</h2>
-                <button class="btn-primary">+ Nuovo Modulo</button>
+                <button class="btn-primary" (click)="openModuloForm()">+ Nuovo Modulo</button>
             </header>
 
             <div class="grid-list">
@@ -117,11 +117,52 @@
             </div>
         </div>
 
+        <!-- Modal for New Module -->
+        <div *ngIf="showModuloForm" class="modal-overlay" (click)="closeModuloForm()">
+            <div class="modal-card" (click)="$event.stopPropagation()">
+                <div class="modal-header">
+                    <h3>Nuovo Modulo</h3>
+                    <button class="close-btn" (click)="closeModuloForm()">✕</button>
+                </div>
+
+                <form class="modal-form" (ngSubmit)="salvaModulo()">
+                    <div class="form-group">
+                        <label for="nome">Nome del Modulo</label>
+                        <input type="text" id="nome" [(ngModel)]="nuovoModulo.nome" name="nome"
+                            placeholder="Es. Sviluppo Web Avanzato" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="codice">Codice Identificativo</label>
+                        <input type="text" id="codice" [(ngModel)]="nuovoModulo.codice" name="codice"
+                            placeholder="Es. WEB01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ore">Ore Totali</label>
+                        <input type="number" id="ore" [(ngModel)]="nuovoModulo.ore" name="ore" placeholder="Es. 80"
+                            min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descrizione">Descrizione</label>
+                        <textarea id="descrizione" [(ngModel)]="nuovoModulo.descrizione" name="descrizione"
+                            placeholder="Descrizione del modulo..." rows="4"></textarea>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" (click)="closeModuloForm()">Annulla</button>
+                        <button type="submit" class="btn-primary">Salva Modulo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Studenti View -->
         <div *ngIf="currentView === 'studenti'" class="view-container fade-in">
             <header class="view-header">
                 <h2>Studenti</h2>
-                <button class="btn-primary">+ Nuovo Studente</button>
+                <button class="btn-primary" (click)="openStudenteForm()">+ Nuovo Studente</button>
             </header>
 
             <div class="table-card">
@@ -139,10 +180,48 @@
                             <td>{{ studente.nome }}</td>
                             <td>{{ studente.cognome }}</td>
                             <td>{{ studente.email }}</td>
-                            <td><button class="btn-text">Dettagli</button></td>
+                            <td>
+                                <button class="btn-edit" (click)="modificaStudente(studente)">Modifica</button>
+                                <button class="btn-delete" (click)="eliminaStudente(studente.id)">Elimina</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <!-- Modal for New Student -->
+        <div *ngIf="showStudenteForm" class="modal-overlay" (click)="closeStudenteForm()">
+            <div class="modal-card" (click)="$event.stopPropagation()">
+                <div class="modal-header">
+                    <h3>Nuovo Studente</h3>
+                    <button class="close-btn" (click)="closeStudenteForm()">✕</button>
+                </div>
+
+                <form class="modal-form" (ngSubmit)="salvaStudente()">
+                    <div class="form-group">
+                        <label for="studenteNome">Nome</label>
+                        <input type="text" id="studenteNome" [(ngModel)]="nuovoStudente.nome" name="studenteNome"
+                            placeholder="Es. Mario" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studenteCognome">Cognome</label>
+                        <input type="text" id="studenteCognome" [(ngModel)]="nuovoStudente.cognome"
+                            name="studenteCognome" placeholder="Es. Rossi" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studenteEmail">Email</label>
+                        <input type="email" id="studenteEmail" [(ngModel)]="nuovoStudente.email" name="studenteEmail"
+                            placeholder="Es. mario.rossi@example.com" required>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" (click)="closeStudenteForm()">Annulla</button>
+                        <button type="submit" class="btn-primary">Salva Studente</button>
+                    </div>
+                </form>
             </div>
         </div>
 

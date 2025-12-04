@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface Modulo {
     id: string;
@@ -27,12 +28,31 @@ interface Esame {
 @Component({
     selector: 'app-dashboard',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, FormsModule],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
     currentView: 'dashboard' | 'moduli' | 'studenti' = 'dashboard';
+    showModuloForm: boolean = false;
+    showStudenteForm: boolean = false;
+
+    // New module form data
+    nuovoModulo: Modulo = {
+        id: '',
+        nome: '',
+        codice: '',
+        ore: 0,
+        descrizione: ''
+    };
+
+    // New student form data
+    nuovoStudente: Studente = {
+        id: '',
+        nome: '',
+        cognome: '',
+        email: ''
+    };
 
     // Mock Data
     moduli: Modulo[] = [
@@ -61,5 +81,101 @@ export class DashboardComponent {
     get mediaVoti(): number {
         const total = this.esami.reduce((acc, curr) => acc + curr.voto, 0);
         return this.esami.length ? Math.round((total / this.esami.length) * 10) / 10 : 0;
+    }
+
+    // Open the new module form
+    openModuloForm() {
+        this.showModuloForm = true;
+        this.resetModuloForm();
+    }
+
+    // Close the form
+    closeModuloForm() {
+        this.showModuloForm = false;
+        this.resetModuloForm();
+    }
+
+    // Reset form data
+    resetModuloForm() {
+        this.nuovoModulo = {
+            id: '',
+            nome: '',
+            codice: '',
+            ore: 0,
+            descrizione: ''
+        };
+    }
+
+    // Save new module
+    salvaModulo() {
+        if (this.nuovoModulo.nome && this.nuovoModulo.codice && this.nuovoModulo.ore > 0) {
+            // Generate a new ID
+            const newId = (this.moduli.length + 1).toString();
+            const moduloToAdd = { ...this.nuovoModulo, id: newId };
+
+            // Add to the list
+            this.moduli.push(moduloToAdd);
+
+            // Close the form
+            this.closeModuloForm();
+        }
+    }
+
+    // Open the new student form
+    openStudenteForm() {
+        this.showStudenteForm = true;
+        this.resetStudenteForm();
+    }
+
+    // Close the student form
+    closeStudenteForm() {
+        this.showStudenteForm = false;
+        this.resetStudenteForm();
+    }
+
+    // Reset student form data
+    resetStudenteForm() {
+        this.nuovoStudente = {
+            id: '',
+            nome: '',
+            cognome: '',
+            email: ''
+        };
+    }
+
+    // Save new student
+    salvaStudente() {
+        if (this.nuovoStudente.nome && this.nuovoStudente.cognome && this.nuovoStudente.email) {
+            if (this.nuovoStudente.id) {
+                // Update existing student
+                const index = this.studenti.findIndex(s => s.id === this.nuovoStudente.id);
+                if (index !== -1) {
+                    this.studenti[index] = { ...this.nuovoStudente };
+                }
+            } else {
+                // Generate a new ID
+                const newId = (this.studenti.length + 1).toString();
+                const studenteToAdd = { ...this.nuovoStudente, id: newId };
+
+                // Add to the list
+                this.studenti.push(studenteToAdd);
+            }
+
+            // Close the form
+            this.closeStudenteForm();
+        }
+    }
+
+    // Edit student
+    modificaStudente(studente: Studente) {
+        this.nuovoStudente = { ...studente };
+        this.showStudenteForm = true;
+    }
+
+    // Delete student
+    eliminaStudente(id: string) {
+        if (confirm('Sei sicuro di voler eliminare questo studente?')) {
+            this.studenti = this.studenti.filter(s => s.id !== id);
+        }
     }
 }
